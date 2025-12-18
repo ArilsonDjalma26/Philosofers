@@ -51,4 +51,5 @@ int parse_args(int ac, char **av, t_rules *rules);
 
 int     init_forks(t_rules *rules);
 int     init_philos(t_rules *rules, t_philo **philos);
+void     init_start_time(t_rules *rules, t_philo **philo);
 #endif

@@ -48,3 +48,15 @@ int     init_philos(t_rules *rules, t_philo **philos)
     }
     return (0);
 }
+void     init_start_time(t_rules *rules, t_philo **philo)
+{
+    int         i;
+
+    i = 0;
+    rules->start_time = get_time_in_ms();
+    while(i < rules->n_philo)
+    {
+        philo[i]->last_meal = rules->start_time;
+        i++;
+    }
+}
