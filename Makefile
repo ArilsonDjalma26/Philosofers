@@ -3,6 +3,7 @@ CFLAGS = -Wall -Wextra -Werror
 CC = cc
 
 SRC = parse.c \
+init.c \
 
 OBJ = $(SRC:.c=.o)
 

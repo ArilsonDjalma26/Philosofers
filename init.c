@@ -1,23 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalbano <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/17 19:25:05 by aalbano           #+#    #+#             */
-/*   Updated: 2025/12/17 19:25:17 by aalbano          ###   ########.fr       */
+/*   Created: 2025/12/18 11:09:15 by aalbano           #+#    #+#             */
+/*   Updated: 2025/12/18 11:09:18 by aalbano          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-
-int main(int ac, char **av)
+int     init_forks(t_rules *rules)
 {
-    if(ac == 5)
-    {
+    int         i;
 
+    i = 0;
+    rules->forks = malloc(sizeof(pthread_mutex_t) * rules->n_philo);
+        if(!rules->forks)
+            return (1);
+    while(i < rules->n_philo)
+    {
+        pthread_mutex_init(&rules->forks[i], NULL);
+        i++;
     }
-    return 0;
+    pthread_mutex_init(&rules->print, NULL);
+    return (0);
 }
