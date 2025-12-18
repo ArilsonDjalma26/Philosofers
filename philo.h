@@ -50,4 +50,5 @@ long    ft_atol(char *s);
 int parse_args(int ac, char **av, t_rules *rules);
 
 int     init_forks(t_rules *rules);
+int     init_philos(t_rules *rules, t_philo **philos);
 #endif
