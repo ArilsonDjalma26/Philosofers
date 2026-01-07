@@ -15,9 +15,17 @@
 
 int main(int ac, char **av)
 {
-    if(ac == 5)
-    {
+    t_rules rules;
+    t_philo *philos;
 
-    }
+    if (parse_args(ac, av, &rules))
+        return (error("Invalid arguments"));
+    if (init_forks(&rules))
+        return (error("Fork init failed"));
+    if (init_philos(&rules, &philos))
+        return (error("Philo init failed"));
+    init_start_time(&rules, philos);
+    start_simulation(&rules, philos);
+    cleanup(&rules, philos);
     return 0;
 }

@@ -2,8 +2,15 @@ NAME = philo
 CFLAGS = -Wall -Wextra -Werror
 CC = cc
 
-SRC = parse.c \
+SRC = main.c \
+parse.c \
 init.c \
+print.c \
+routine.c \
+threads.c \
+time.c \
+actions.c \
+
 
 OBJ = $(SRC:.c=.o)
 

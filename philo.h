@@ -26,8 +26,10 @@ typedef struct s_rules
     long    time_sleep;
     long    time_died;
     int         must_eat;
-    long    start_time;
     int     someone_died;
+    long    start_time;
+    int         finished;
+    pthread_mutex_t finish_mutex;
     pthread_mutex_t *forks;
     pthread_mutex_t print;
 }   t_rules;
@@ -52,4 +54,5 @@ int parse_args(int ac, char **av, t_rules *rules);
 int     init_forks(t_rules *rules);
 int     init_philos(t_rules *rules, t_philo **philos);
 void     init_start_time(t_rules *rules, t_philo **philo);
+int create_threads(t_rules *rules, t_philo *philos);
 #endif
