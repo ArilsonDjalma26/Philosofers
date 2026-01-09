@@ -55,4 +55,5 @@ int     init_forks(t_rules *rules);
 int     init_philos(t_rules *rules, t_philo **philos);
 void     init_start_time(t_rules *rules, t_philo **philo);
 int create_threads(t_rules *rules, t_philo *philos);
+int simulation_finished(t_rules *rules);
 #endif

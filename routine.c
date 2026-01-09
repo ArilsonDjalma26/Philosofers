@@ -10,7 +10,11 @@ void    *routine(void *arg)
     while (!simulation_finished(philo->rules))
     {
         eat(philo);
+        if(simulation_finished(philo->rules))
+            break;
         sleep_philo(philo);
+        if(simulation_finished(philo->rules))
+            break;        
         think(philo);
     }
     return (NULL);

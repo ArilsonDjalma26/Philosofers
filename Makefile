@@ -6,10 +6,13 @@ SRC = main.c \
 parse.c \
 init.c \
 print.c \
+monitor.c \
 routine.c \
+simulation.c \
 threads.c \
 time.c \
 actions.c \
+cleanup.c 
 
 
 OBJ = $(SRC:.c=.o)
