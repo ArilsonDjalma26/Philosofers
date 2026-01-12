@@ -10,6 +10,7 @@ philo_utils.c \
 monitor.c \
 routine.c \
 simulation.c \
+start_simulation.c \
 threads.c \
 time.c \
 actions.c \
