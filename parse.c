@@ -64,11 +64,11 @@ int parse_args(int ac, char **av, t_rules *rules)
         rules->must_eat = ft_atol(av[i]);
     else
         rules->must_eat = -1;
-    if(rules->n_philo == 0
-    || rules->time_died == 0
-    || rules->time_eat == 0
-    || rules->time_sleep == 0
-    || ac == 6 && rules->must_eat == 0)
+    if((rules->n_philo == 0
+        || rules->time_died == 0
+        || rules->time_eat == 0
+        || rules->time_sleep == 0
+        || ac == 6) && (rules->must_eat == 0))
         return (1);
     return (0);
 }

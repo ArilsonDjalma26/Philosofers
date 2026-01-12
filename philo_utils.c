@@ -1,0 +1,26 @@
+#include "philo.h"
+
+int error(char *msg)
+{
+    write(2, msg, ft_strlen(msg));
+    write(2, "\n", 1);
+    return(1);
+}
+void    cleanup(t_rules *rules, t_philo *philos)
+{
+    int     i;
+
+    i = 0;
+    if(rules->forks)
+    {
+        while(i < rules->n_philo)
+        {
+            pthread_mutex_destroy(&rules->forks);
+            i++;
+        }
+        free(rules->forks);
+    }
+    pthread_mutex_destroy(&rules->print);
+    if(philos)
+        free(philos);
+}

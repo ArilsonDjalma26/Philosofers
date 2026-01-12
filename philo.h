@@ -32,6 +32,7 @@ typedef struct s_rules
     pthread_mutex_t finish_mutex;
     pthread_mutex_t *forks;
     pthread_mutex_t print;
+    pthread_t   monitor;
 }   t_rules;
 
 typedef struct s_philo
@@ -46,14 +47,29 @@ typedef struct s_philo
 
 }   t_philo;
 
-//Funcoes do parse
+//Parsing functions
 int     is_positive_number(char *s);
 long    ft_atol(char *s);
 int parse_args(int ac, char **av, t_rules *rules);
 
+int error(char *msg);
+void    cleanup(t_rules *rules, t_philo *philos);
+
 int     init_forks(t_rules *rules);
 int     init_philos(t_rules *rules, t_philo **philos);
-void     init_start_time(t_rules *rules, t_philo **philo);
+void     init_start_time(t_rules *rules, t_philo *philos);
 int create_threads(t_rules *rules, t_philo *philos);
+void    start_simulation(t_rules *rules, t_philo *philos);
 int simulation_finished(t_rules *rules);
+void print_status(t_philo *philo, char *msg);
+void    *routine(void *arg);
+void *monitor(void *arg);
+void    precise_sleep(long time);
+long    get_time_in_ms(void);
+//actions
+void eat(t_philo *philo);
+void    think(t_philo *philo);
+void    sleep_philo(t_philo *philo);
+//libft functions
+size_t	ft_strlen(const char *s);
 #endif

@@ -12,7 +12,7 @@ void    *routine(void *arg)
         eat(philo);
         if(simulation_finished(philo->rules))
             break;
-        sleep_philo(philo);
+        sleep(philo);
         if(simulation_finished(philo->rules))
             break;        
         think(philo);

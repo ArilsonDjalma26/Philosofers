@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalbano <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/17 19:25:05 by aalbano           #+#    #+#             */
-/*   Updated: 2025/12/17 19:25:17 by aalbano          ###   ########.fr       */
+/*   Created: 2025/06/10 14:11:17 by aalbano           #+#    #+#             */
+/*   Updated: 2025/06/10 14:18:56 by aalbano          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-
-int main(int ac, char **av)
+size_t	ft_strlen(const char *s)
 {
-    t_rules *rules;
-    t_philo *philos;
+	size_t	len;
 
-    if (parse_args(ac, av, &rules))
-        return (error("Invalid arguments"));
-    if (init_forks(&rules))
-        return (error("Fork init failed"));
-    if (init_philos(&rules, &philos))
-        return (error("Philo init failed"));
-    init_start_time(&rules, philos);
-    start_simulation(&rules, philos);
-    cleanup(&rules, philos);
-    return 0;
+	if (!s)
+		return (0);
+	len = 0;
+	while (s[len] != '\0')
+	{
+		len++;
+	}
+	return (len);
 }

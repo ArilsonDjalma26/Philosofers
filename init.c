@@ -48,7 +48,7 @@ int     init_philos(t_rules *rules, t_philo **philos)
     }
     return (0);
 }
-void     init_start_time(t_rules *rules, t_philo **philo)
+void     init_start_time(t_rules *rules, t_philo *philos)
 {
     int         i;
 
@@ -56,7 +56,7 @@ void     init_start_time(t_rules *rules, t_philo **philo)
     rules->start_time = get_time_in_ms();
     while(i < rules->n_philo)
     {
-        philo[i]->last_meal = rules->start_time;
+        philos[i].last_meal = rules->start_time;
         i++;
     }
 }
