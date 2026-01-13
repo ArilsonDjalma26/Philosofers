@@ -26,6 +26,7 @@ int	init_forks(t_rules *rules)
 		i++;
 	}
 	pthread_mutex_init(&rules->print, NULL);
+	pthread_mutex_init(&rules->finish_mutex, NULL);
 	return (0);
 }
 int	init_philos(t_rules *rules, t_philo **philos)

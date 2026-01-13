@@ -33,6 +33,7 @@ void	cleanup(t_rules *rules, t_philo *philos)
 		free(rules->forks);
 	}
 	pthread_mutex_destroy(&rules->print);
+	pthread_mutex_destroy(&rules->finish_mutex);
 	if(philos)
 		free(philos);
 }
