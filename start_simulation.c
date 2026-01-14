@@ -18,8 +18,9 @@ void	start_simulation(t_rules *rules, t_philo *philos)
 
 	if(rules->n_philo == 1)
 	{
-		pthread_create(&philos[0].thread, NULL, routine, &philos[0]);
-		pthread_join(philos[0].thread, NULL);
+		print_status(&philos[0], "has taken a fork");
+		ft_usleep(rules->time_died, rules);
+		print_status(&philos[0], "died");
 		return ;
 	}
 	if(create_threads(rules, philos))

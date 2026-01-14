@@ -64,7 +64,7 @@ int	simulation_finished(t_rules *rules);
 void	print_status(t_philo *philo, char *msg);
 void	*routine(void *arg);
 void	*monitor(void *arg);
-void	precise_sleep(long time);
+void    ft_usleep(long time, t_rules *rules);
 long	get_time_in_ms(void);
 //actions
 void	eat(t_philo *philo);

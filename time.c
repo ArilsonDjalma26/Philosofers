@@ -12,15 +12,17 @@
 
 #include "philo.h"
 
-#include "philo.h"
-
-void    precise_sleep(long time)
+void    ft_usleep(long time, t_rules *rules)
 {
     long start;
 
     start = get_time_in_ms();
-    while (get_time_in_ms() - start < time)
+    while (!simulation_finished(rules))
+    {
+        if (get_time_in_ms() - start >= time)
+            break;
         usleep(100);
+    }
 }
 long    get_time_in_ms(void)
 {
