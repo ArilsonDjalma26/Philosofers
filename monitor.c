@@ -31,20 +31,21 @@ static int	check_death(t_philo *philo)
 static int	check_meals(t_philo *philos)
 {
 	int		i;
+	int		n;
 
 	i = 0;
-
+	n = philos[0].rules->n_philo;
 	if (philos[i].rules->must_eat == -1)
 		return(0);
-	while(i < philos[i].rules->n_philo)
+	while(i < n)
 	{
-		if (philos[i].meal_eaten < philos[i].rules->must_eat)
+		if (philos[i].meal_eaten < philos[0].rules->must_eat)
 			return (0);
 		i++;
 	}
-		pthread_mutex_lock(&philos[i].rules->finish_mutex);
+		pthread_mutex_lock(&philos[0].rules->finish_mutex);
 		philos[i].rules->finished = 1;
-		pthread_mutex_unlock(&philos[i].rules->finish_mutex);
+		pthread_mutex_unlock(&philos[0].rules->finish_mutex);
 		return(1);
 }
 

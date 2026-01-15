@@ -18,9 +18,11 @@ void	start_simulation(t_rules *rules, t_philo *philos)
 
 	if(rules->n_philo == 1)
 	{
+		pthread_mutex_lock(philos->left_fork);
 		print_status(&philos[0], "has taken a fork");
 		ft_usleep(rules->time_died, rules);
 		print_status(&philos[0], "died");
+		pthread_mutex_unlock(philos->left_fork);
 		return ;
 	}
 	if(create_threads(rules, philos))

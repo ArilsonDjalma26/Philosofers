@@ -26,5 +26,5 @@ int	main(int ac, char **av)
 	init_start_time(&rules, philos);
 	start_simulation(&rules, philos);
 	cleanup(&rules, philos);
-	return 0;
+	return (0);
 }
