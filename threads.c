@@ -20,7 +20,12 @@ int	create_threads(t_rules *rules, t_philo *philos)
 	while (i < rules->n_philo)
 	{
 		if (pthread_create(&philos[i].thread, NULL, routine, &philos[i]) != 0)
+		{
+			int j = 0;
+			while (j < i)
+				pthread_join(philos[j++].thread, NULL);
 			return (1);
+		}
 		i++;
 	}
 	return (0);

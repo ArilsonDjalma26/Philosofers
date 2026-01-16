@@ -44,7 +44,7 @@ static int	check_meals(t_philo *philos)
 		i++;
 	}
 		pthread_mutex_lock(&philos[0].rules->finish_mutex);
-		philos[i].rules->finished = 1;
+			philos[0].rules->finished = 1;
 		pthread_mutex_unlock(&philos[0].rules->finish_mutex);
 		return(1);
 }

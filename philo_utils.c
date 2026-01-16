@@ -27,10 +27,12 @@ void	cleanup(t_rules *rules, t_philo *philos)
 	{
 		while(i < rules->n_philo)
 		{
-			pthread_mutex_destroy(rules->forks);
+			pthread_mutex_destroy(&rules->forks[i]);
 			i++;
 		}
 		free(rules->forks);
+		rules->forks = NULL;
+		rules->n_philo = 0;
 	}
 	pthread_mutex_destroy(&rules->print);
 	pthread_mutex_destroy(&rules->finish_mutex);
