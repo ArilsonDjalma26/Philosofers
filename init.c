@@ -18,26 +18,28 @@ int	init_forks(t_rules *rules)
 
 	i = 0;
 	rules->forks = malloc(sizeof(pthread_mutex_t) * rules->n_philo);
-	if(!rules->forks)
+	if (!rules->forks)
 		return (1);
-	while(i < rules->n_philo)
+	while (i < rules->n_philo)
 	{
 		pthread_mutex_init(&rules->forks[i], NULL);
 		i++;
 	}
 	pthread_mutex_init(&rules->print, NULL);
 	pthread_mutex_init(&rules->finish_mutex, NULL);
+	pthread_mutex_init(&rules->meal_lock, NULL);
 	return (0);
 }
+
 int	init_philos(t_rules *rules, t_philo **philos)
 {
 	int	i;
-	
+
 	i = 0;
 	*philos = malloc(sizeof(t_philo) * rules->n_philo);
-	if(!*philos)
+	if (!*philos)
 		return (1);
-	while(i < rules->n_philo)
+	while (i < rules->n_philo)
 	{
 		(*philos)[i].id = i + 1;
 		(*philos)[i].meal_eaten = 0;
@@ -49,13 +51,14 @@ int	init_philos(t_rules *rules, t_philo **philos)
 	}
 	return (0);
 }
+
 void	init_start_time(t_rules *rules, t_philo *philos)
 {
 	int	i;
 
 	i = 0;
 	rules->start_time = get_time_in_ms();
-	while(i < rules->n_philo)
+	while (i < rules->n_philo)
 	{
 		philos[i].last_meal = rules->start_time;
 		i++;

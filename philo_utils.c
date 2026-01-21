@@ -16,16 +16,17 @@ int	error(char *msg)
 {
 	write(2, msg, ft_strlen(msg));
 	write(2, "\n", 1);
-	return(1);
+	return (1);
 }
+
 void	cleanup(t_rules *rules, t_philo *philos)
 {
 	int		i;
-	
+
 	i = 0;
-	if(rules->forks)
+	if (rules->forks)
 	{
-		while(i < rules->n_philo)
+		while (i < rules->n_philo)
 		{
 			pthread_mutex_destroy(&rules->forks[i]);
 			i++;
@@ -36,6 +37,7 @@ void	cleanup(t_rules *rules, t_philo *philos)
 	}
 	pthread_mutex_destroy(&rules->print);
 	pthread_mutex_destroy(&rules->finish_mutex);
-	if(philos)
+	pthread_mutex_destroy(&rules->meal_lock);
+	if (philos)
 		free(philos);
 }

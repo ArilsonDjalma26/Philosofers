@@ -16,26 +16,27 @@ void	start_simulation(t_rules *rules, t_philo *philos)
 {
 	int		i;
 
-	if(rules->n_philo == 1)
+	if (rules->n_philo == 1)
 	{
 		pthread_mutex_lock(philos->left_fork);
 		print_status(&philos[0], "has taken a fork");
 		ft_usleep(rules->time_died, rules);
-		print_status(&philos[0], "died");
+		printf("%ld %d died\n",
+			get_time_in_ms() - rules->start_time, philos[0].id);
 		pthread_mutex_unlock(philos->left_fork);
 		return ;
 	}
-	if(create_threads(rules, philos))
+	if (create_threads(rules, philos))
 		return ;
-	if(pthread_create(&rules->monitor, NULL, monitor, philos) != 0)
+	if (pthread_create(&rules->monitor, NULL, monitor, philos) != 0)
 	{
 		i = 0;
-		while(i < rules->n_philo)
+		while (i < rules->n_philo)
 			pthread_join(philos[i++].thread, NULL);
 		return ;
 	}
 	i = 0;
-	while(i < rules->n_philo)
+	while (i < rules->n_philo)
 		pthread_join(philos[i++].thread, NULL);
 	pthread_join(rules->monitor, NULL);
 }

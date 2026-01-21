@@ -12,22 +12,23 @@
 
 #include "philo.h"
 
-void    ft_usleep(long time, t_rules *rules)
+void	ft_usleep(long time, t_rules *rules)
 {
-    long start;
+	long	start;
 
-    start = get_time_in_ms();
-    while (!simulation_finished(rules))
-    {
-        if (get_time_in_ms() - start >= time)
-            break;
-        usleep(100);
-    }
+	start = get_time_in_ms();
+	while (!simulation_finished(rules))
+	{
+		if (get_time_in_ms() - start >= time)
+			break ;
+		usleep(100);
+	}
 }
-long    get_time_in_ms(void)
-{
-    struct timeval tv;
 
-    gettimeofday(&tv, NULL);
-    return(tv.tv_sec * 1000 + tv.tv_usec / 1000);
+long	get_time_in_ms(void)
+{
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }

@@ -14,8 +14,8 @@
 
 int	main(int ac, char **av)
 {
-	t_rules rules;
-	t_philo *philos;
+	t_rules	rules;
+	t_philo	*philos;
 
 	philos = NULL;
 	if (parse_args(ac, av, &rules))

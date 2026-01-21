@@ -6,16 +6,14 @@
 /*   By: aalbano <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 09:11:53 by aalbano           #+#    #+#             */
-/*   Updated: 2026/01/12 09:15:30 by aalbano          ###   ########.fr       */
+/*   Updated: 2026/01/21 17:13:30 by aalbano          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void eat(t_philo *philo)
+static void	take_forks(t_philo *philo)
 {
-	if(simulation_finished(philo->rules))
-		return ;
 	if (philo->id % 2 == 0)
 	{
 		pthread_mutex_lock(philo->left_fork);
@@ -30,33 +28,47 @@ void eat(t_philo *philo)
 		pthread_mutex_lock(philo->left_fork);
 		print_status(philo, "has taken a fork");
 	}
+}
+
+static void	drop_forks(t_philo *philo)
+{
+	if (philo->id % 2 == 0)
+	{
+		pthread_mutex_unlock(philo->left_fork);
+		pthread_mutex_unlock(philo->right_fork);
+	}
+	else
+	{
+		pthread_mutex_unlock(philo->right_fork);
+		pthread_mutex_unlock(philo->left_fork);
+	}
+}
+
+void	eat(t_philo *philo)
+{
+	if (simulation_finished(philo->rules))
+		return ;
+	take_forks(philo);
+	pthread_mutex_lock(&philo->rules->meal_lock);
 	philo->last_meal = get_time_in_ms();
+	philo->meal_eaten++;
+	pthread_mutex_unlock(&philo->rules->meal_lock);
 	print_status(philo, "is eating");
 	ft_usleep(philo->rules->time_eat, philo->rules);
-	philo->meal_eaten++;
-	if (philo->id % 2 == 0)
-	{
-		pthread_mutex_unlock(philo->left_fork);
-		pthread_mutex_unlock(philo->right_fork);
-	}
-	else
-	{
-		pthread_mutex_unlock(philo->right_fork);
-		pthread_mutex_unlock(philo->left_fork);
-	}
+	drop_forks(philo);
 }
 
 void	think(t_philo *philo)
 {
 	if (simulation_finished(philo->rules))
 		return ;
-	print_status (philo, "is thinking");
+	print_status(philo, "is thinking");
 }
 
-void	sleep_philo (t_philo *philo)
+void	sleep_philo(t_philo *philo)
 {
 	if (simulation_finished(philo->rules))
-		return;
+		return ;
 	print_status (philo, "is sleeping");
 	ft_usleep(philo->rules->time_sleep, philo->rules);
 }

@@ -15,58 +15,71 @@
 static int	check_death(t_philo *philo)
 {
 	long	now;
-	
+	long	last_meal;
+
+	pthread_mutex_lock(&philo->rules->meal_lock);
+	last_meal = philo->last_meal;
+	pthread_mutex_unlock(&philo->rules->meal_lock);
 	now = get_time_in_ms();
-	if (now - philo->last_meal > philo->rules->time_died)
+	if (now - last_meal > philo->rules->time_died)
 	{
-		print_status(philo, "died");
 		pthread_mutex_lock(&philo->rules->finish_mutex);
-		philo->rules->finished = 1;
+		if (!philo->rules->finished)
+		{
+			pthread_mutex_lock(&philo->rules->print);
+			printf("%ld %d died\n", now - philo->rules->start_time, philo->id);
+			pthread_mutex_unlock(&philo->rules->print);
+			philo->rules->finished = 1;
+		}
 		pthread_mutex_unlock(&philo->rules->finish_mutex);
-		return(1);
+		return (1);
 	}
-	return(0);
+	return (0);
 }
 
 static int	check_meals(t_philo *philos)
 {
 	int		i;
 	int		n;
+	int		meals_done;
 
 	i = 0;
 	n = philos[0].rules->n_philo;
 	if (philos[i].rules->must_eat == -1)
-		return(0);
-	while(i < n)
+		return (0);
+	while (i < n)
 	{
-		if (philos[i].meal_eaten < philos[0].rules->must_eat)
+		pthread_mutex_lock(&philos[0].rules->meal_lock);
+		meals_done = philos[i].meal_eaten;
+		pthread_mutex_unlock(&philos[0].rules->meal_lock);
+		if (meals_done < philos[0].rules->must_eat)
 			return (0);
 		i++;
 	}
-		pthread_mutex_lock(&philos[0].rules->finish_mutex);
-			philos[0].rules->finished = 1;
-		pthread_mutex_unlock(&philos[0].rules->finish_mutex);
-		return(1);
+	pthread_mutex_lock(&philos[0].rules->finish_mutex);
+	philos[0].rules->finished = 1;
+	pthread_mutex_unlock(&philos[0].rules->finish_mutex);
+	return (1);
 }
 
 void	*monitor(void *arg)
 {
-	t_philo *philos;
+	t_philo	*philos;
 	int		i;
 
 	philos = (t_philo *)arg;
-	while(!simulation_finished(philos[0].rules))
+	while (!simulation_finished(philos[0].rules))
 	{
 		i = 0;
-		while(i < philos[0].rules->n_philo)
+		while (i < philos[0].rules->n_philo)
 		{
 			if (check_death(&philos[i]))
-				return(NULL);
+				return (NULL);
 			i++;
 		}
 		if (check_meals(philos))
-			return(NULL);
-		usleep(1000);
+			return (NULL);
+		usleep(500);
 	}
-	return(NULL);
+	return (NULL);
 }
