@@ -21,6 +21,9 @@ void	start_simulation(t_rules *rules, t_philo *philos)
 		pthread_mutex_lock(philos->left_fork);
 		print_status(&philos[0], "has taken a fork");
 		ft_usleep(rules->time_died, rules);
+		pthread_mutex_lock(&rules->finish_mutex);
+		rules->finished = 1;
+		pthread_mutex_unlock(&rules->finish_mutex);
 		printf("%ld %d died\n",
 			get_time_in_ms() - rules->start_time, philos[0].id);
 		pthread_mutex_unlock(philos->left_fork);

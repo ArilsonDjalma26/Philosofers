@@ -27,6 +27,8 @@ int	create_threads(t_rules *rules, t_philo *philos)
 				pthread_join(philos[j++].thread, NULL);
 			return (1);
 		}
+		if (rules->n_philo > 100)
+			usleep(10);
 		i++;
 	}
 	return (0);

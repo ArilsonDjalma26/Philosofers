@@ -26,10 +26,10 @@ static int	check_death(t_philo *philo)
 		pthread_mutex_lock(&philo->rules->finish_mutex);
 		if (!philo->rules->finished)
 		{
+			philo->rules->finished = 1;
 			pthread_mutex_lock(&philo->rules->print);
 			printf("%ld %d died\n", now - philo->rules->start_time, philo->id);
 			pthread_mutex_unlock(&philo->rules->print);
-			philo->rules->finished = 1;
 		}
 		pthread_mutex_unlock(&philo->rules->finish_mutex);
 		return (1);
@@ -66,8 +66,12 @@ void	*monitor(void *arg)
 {
 	t_philo	*philos;
 	int		i;
+	int		sleep_time;
 
 	philos = (t_philo *)arg;
+	sleep_time = 500;
+	if (philos[0].rules->n_philo > 100)
+		sleep_time = 1000;
 	while (!simulation_finished(philos[0].rules))
 	{
 		i = 0;
@@ -79,7 +83,7 @@ void	*monitor(void *arg)
 		}
 		if (check_meals(philos))
 			return (NULL);
-		usleep(500);
+		usleep(sleep_time);
 	}
 	return (NULL);
 }

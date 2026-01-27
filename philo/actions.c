@@ -49,6 +49,11 @@ void	eat(t_philo *philo)
 	if (simulation_finished(philo->rules))
 		return ;
 	take_forks(philo);
+	if (simulation_finished(philo->rules))
+	{
+		drop_forks(philo);
+		return ;
+	}
 	pthread_mutex_lock(&philo->rules->meal_lock);
 	philo->last_meal = get_time_in_ms();
 	philo->meal_eaten++;
@@ -60,9 +65,16 @@ void	eat(t_philo *philo)
 
 void	think(t_philo *philo)
 {
+	long	time_to_think;
+
 	if (simulation_finished(philo->rules))
 		return ;
 	print_status(philo, "is thinking");
+	time_to_think = philo->rules->time_died
+		- philo->rules->time_sleep - philo->rules->time_eat;
+	if (time_to_think < 0)
+		time_to_think = 0;
+	ft_usleep(time_to_think, philo->rules);
 }
 
 void	sleep_philo(t_philo *philo)

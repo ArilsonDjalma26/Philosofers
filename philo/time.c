@@ -15,13 +15,17 @@
 void	ft_usleep(long time, t_rules *rules)
 {
 	long	start;
+	long	sleep_unit;
 
 	start = get_time_in_ms();
+	sleep_unit = 100;
+	if (time < 100)
+		sleep_unit = 10;
 	while (!simulation_finished(rules))
 	{
 		if (get_time_in_ms() - start >= time)
 			break ;
-		usleep(100);
+		usleep(sleep_unit);
 	}
 }
 

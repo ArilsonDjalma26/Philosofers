@@ -17,6 +17,8 @@ void	*routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	if (philo->id % 2 == 0)
+		ft_usleep(philo->rules->time_eat / 2, philo->rules);
 	while (!simulation_finished(philo->rules))
 	{
 		eat(philo);

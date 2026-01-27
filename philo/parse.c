@@ -18,7 +18,7 @@ int	is_positive_number(char *s)
 
 	i = 0;
 	if (!s || s[0] == '\0')
-		return (0);
+		return (1);
 	while (s[i])
 	{
 		if (s[i] < '0' || s[i] > '9')
@@ -37,6 +37,8 @@ long	ft_atol(char *s)
 	res = 0;
 	while (s[i])
 	{
+		if (res > (9223372036854775807 - (s[i] - '0')) / 10)
+			return (-1);
 		res = res * 10 + (s[i] - '0');
 		i++;
 	}
@@ -61,9 +63,9 @@ static int	validate_args(int ac, char **av)
 
 static int	check_values(int ac, t_rules *rules)
 {
-	if (rules->n_philo == 0 || rules->time_died == 0
-		|| rules->time_eat == 0 || rules->time_sleep == 0
-		|| (ac == 6 && rules->must_eat == 0))
+	if (rules->n_philo <= 0 || rules->time_died <= 0
+		|| rules->time_eat <= 0 || rules->time_sleep <= 0
+		|| (ac == 6 && rules->must_eat <= 0))
 		return (1);
 	return (0);
 }
